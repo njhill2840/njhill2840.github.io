@@ -3,9 +3,9 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <style>
-body {
+<!--body {
     background-color: #2F2C4F;
-}
+}-->
 
 canvas {
     padding-left: 0;
@@ -26,7 +26,7 @@ div {
 p {
     text-align: center;
     font-size: 1.25em;
-    color: #ffffff;
+    <!--color: #ffffff;-->
     font-family: Calibri, Arial, Helvetica, sans-serif;
     margin: auto;
     width: 700px;
@@ -41,6 +41,8 @@ var myScore;
 var points;
 var randomValue;
 var pieceSpeed;
+var selectBox;
+var selectedClef;
 
 var gamePieceLineE = new component(30, 30, "red", 490, 210);
 var gamePieceLineG = new component(30, 30, "red", 490, 170);
@@ -134,8 +136,9 @@ function component(width, height, color, x, y, type) {
 function updateGameArea() {
     if (myGamePiece.crashWith(endLine)) {
         myGameArea.stop();
-        alert("Game Over! Score: " + points + "\nClick Start to play again!");
+        alert("Game Over! " + selectedClef + " Clef Score: " + points + "\nClick Start to play again!");
         randomValue=null;
+        document.getElementById("clef-selection").disabled = false;
         myGamePiece.update();
     } else {
         myGameArea.clear();
@@ -164,40 +167,117 @@ function newNote() { //generate a new note on screen
 	myGameArea.start();
 }
 
+function getClef() {
+        selectBox = document.getElementById("clef-selection");
+        document.getElementById("clef-selection").disabled = true;
+        return selectedClef = selectBox.value;
+}
+
 function checkButton(clicked_id) { //check for button input--start or answer
 	if (clicked_id=="Start") {
 	    points=0;
 	    pieceSpeed = 0;
         newNote();
-    } else if (clicked_id=="E" && randomValue==0) {
-    	points += 1;
-    	newNote();
-    } else if (clicked_id=="E" && randomValue==8) {
-    	points += 1;
-        newNote();
-    } else if (clicked_id=="F" && randomValue==4) {
-    	points += 1;
-        newNote();
- 	} else if (clicked_id=="F" && randomValue==5) {
-    	points += 1;
-        newNote();
-   	} else if (clicked_id=="G" && randomValue==1) {
-    	points += 1;
-        newNote();
-    } else if (clicked_id=="A" && randomValue==6) {
-    	points += 1;
-        newNote();
-   	} else if (clicked_id=="B" && randomValue==2) {
-    	points += 1;
-        newNote();
-   	} else if (clicked_id=="C" && randomValue==7) {
-    	points += 1;
-        newNote();
-   	} else if (clicked_id=="D" && randomValue==3) {
-    	points += 1;
-        newNote();
-   	} else {
-    	//do nothing
+        getClef();
+    } else {
+    	switch (selectedClef) {
+        	case "Treble":
+              if (clicked_id=="E" && randomValue==0) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="E" && randomValue==8) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="F" && randomValue==4) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="F" && randomValue==5) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="G" && randomValue==1) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="A" && randomValue==6) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="B" && randomValue==2) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="C" && randomValue==7) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="D" && randomValue==3) {
+                  points += 1;
+                  newNote();
+              } else {
+                  //do nothing
+              }
+              break;
+          case "Alto":
+              if (clicked_id=="F" && randomValue==0) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="F" && randomValue==8) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="G" && randomValue==4) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="G" && randomValue==5) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="A" && randomValue==1) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="B" && randomValue==6) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="C" && randomValue==2) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="D" && randomValue==7) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="E" && randomValue==3) {
+                  points += 1;
+                  newNote();
+              } else {
+                  //do nothing
+              }
+              break;
+          case "Bass":
+              if (clicked_id=="G" && randomValue==0) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="G" && randomValue==8) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="A" && randomValue==4) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="A" && randomValue==5) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="B" && randomValue==1) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="C" && randomValue==6) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="D" && randomValue==2) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="E" && randomValue==7) {
+                  points += 1;
+                  newNote();
+              } else if (clicked_id=="F" && randomValue==3) {
+                  points += 1;
+                  newNote();
+              } else {
+                  //do nothing
+              }
+              break;
+    	}
     }
 }
 
@@ -205,6 +285,11 @@ function checkButton(clicked_id) { //check for button input--start or answer
 </script>
 <div>
     <br>
+    <label for="clef-selection">Select a clef:</label>
+    <select name="clef-selection" id="clef-selection">
+        <option value="Treble">Treble</option>
+        <option value="Alto">Alto</option>
+        <option value="Bass">Bass</option></select><br><br>
     <button id="A" onClick="checkButton(this.id)" ontouchstart="checkButton(this.id)">A</button>
     <button id="B" onClick="checkButton(this.id)" ontouchstart="checkButton(this.id)">B</button>
     <button id="C" onClick="checkButton(this.id)" ontouchstart="checkButton(this.id)">C</button>
